@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "badwords": "^1.0.0",
     "nodemon": "^1.17.5",
     "steam-user": "^3.27.1"
   }
