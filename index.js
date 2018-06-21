@@ -32,17 +32,12 @@ client.on('loggedOn', () => {
 });
 
 client.on('friendMessage', function(steamid, message) {
-    console.log("Friend message from " + steamid.getSteam3RenderedID() + ": " + message);
-    const myMessage = addRandomBadwords('Co je ty píčo');
+  signale.watch('friendMessage');
+  signale.success(steamid.getSteam3RenderedID(), 'sent you a message:', message)
+  setTimeout(() => {
+    const myMessage = message;
     sendChatMessage(steamid, myMessage);
-    setTimeout(() => {
-      const myMessage = addRandomBadwords('Ty si ze mě děláš prdel?');
-      sendChatMessage(steamid, myMessage);
-    }, 3000);
-    setTimeout(() => {
-      const myMessage = addRandomBadwords('Tak tos posral chlapečku');
-      sendChatMessage(steamid, myMessage);
-    }, 5000);
+  }, 3000);
 });
 
 client.on('friendRelationship', (steamid, relationship) => {
