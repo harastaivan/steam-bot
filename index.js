@@ -2,14 +2,18 @@ const SteamUser = require('steam-user');
 const client = new SteamUser();
 
 const badwordsArray = require('badwords/array');
+const signale = require('signale');
+
+signale.config({
+  displayTimestamp: true,
+});
+
 
 const accountName = process.argv[2];
 const password = process.argv[3];
 const steamName = process.argv[4];
 
-console.log('accountName: ', accountName);
-console.log('password: ', password);
-console.log('steamName: ', steamName);
+signale.pending('Logging on with', accountName, 'accountName and', password, 'password');
 
 const logOnOptions = {
   accountName: accountName,
@@ -50,9 +54,9 @@ client.on('friendRelationship', (steamid, relationship) => {
 });
 
 sendChatMessage = (steamid, message) => {
+  signale.pending('Sending message to', steamid.getSteam3RenderedID())
   client.chatMessage(steamid, message);
-  console.log('Message sent to user with steamid', steamid);
-  console.log(message)
+  signale.success('Message:', message);
 }
 
 addRandomBadwords = (message) => {

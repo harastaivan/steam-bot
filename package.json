@@ -11,6 +11,7 @@
   "dependencies": {
     "badwords": "^1.0.0",
     "nodemon": "^1.17.5",
+    "signale": "^1.2.1",
     "steam-user": "^3.27.1"
   }
 }
