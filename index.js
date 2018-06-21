@@ -23,11 +23,12 @@ const logOnOptions = {
 client.logOn(logOnOptions);
 
 client.on('loggedOn', () => {
-  console.log('Logged into Steam');
-  console.log(client.steamID);
+  signale.success('Logged into Steam');
+  signale.success(client.steamID.getSteam3RenderedID());
 
   client.setPersona(SteamUser.Steam.EPersonaState.Online, steamName);
   client.gamesPlayed(440);
+  signale.success('steamName set to', steamName);
 });
 
 client.on('friendMessage', function(steamid, message) {
