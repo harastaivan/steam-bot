@@ -21,11 +21,23 @@ client.logOn(logOnOptions);
 client.on('loggedOn', () => {
   console.log('Logged into Steam');
   console.log(client.steamID);
-  console.log(client.options);
-  // console.log(client.myFriends);
 
   client.setPersona(SteamUser.Steam.EPersonaState.Online, steamName);
   client.gamesPlayed(440);
+});
+
+client.on('friendMessage', function(steamid, message) {
+    console.log("Friend message from " + steamid.getSteam3RenderedID() + ": " + message);
+    const myMessage = addRandomBadwords('Co je ty píčo');
+    sendChatMessage(steamid, myMessage);
+    setTimeout(() => {
+      const myMessage = addRandomBadwords('Ty si ze mě děláš prdel?');
+      sendChatMessage(steamid, myMessage);
+    }, 3000);
+    setTimeout(() => {
+      const myMessage = addRandomBadwords('Tak tos posral chlapečku');
+      sendChatMessage(steamid, myMessage);
+    }, 5000);
 });
 
 client.on('friendRelationship', (steamid, relationship) => {
