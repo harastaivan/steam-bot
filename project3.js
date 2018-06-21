@@ -1,6 +1,8 @@
 const SteamUser = require('steam-user');
 const client = new SteamUser();
 
+const badwordsArray = require('badwords/array');
+
 const accountName = process.argv[2];
 const password = process.argv[3];
 const steamName = process.argv[4];
@@ -40,3 +42,16 @@ client.on('friendRelationship', (steamid, relationship) => {
 
   }
 });
+
+sendChatMessage = (steamid, message) => {
+  client.chatMessage(steamid, message);
+  console.log('Message sent to user with steamid', steamid);
+  console.log(message)
+}
+
+addRandomBadwords = (message) => {
+  for (let i = 0; i < 10; i++) {
+    message += ' ' + badwordsArray[Math.floor((Math.random() * badwordsArray.length) + 1)];
+  }
+  return message;
+}
