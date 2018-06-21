@@ -3,10 +3,16 @@ const client = new SteamUser();
 
 const badwordsArray = require('badwords/array');
 const signale = require('signale');
+const translate = require('translate');
+
+const credentials = require('./credentials');
 
 signale.config({
   displayTimestamp: true,
 });
+
+translate.engine = 'google';
+translate.key = credentials.translateKey;
 
 const listOfTheRelationships = [
   'None',
@@ -19,9 +25,9 @@ const listOfTheRelationships = [
   'SuggestedFriend',
 ];
 
-const accountName = process.argv[2];
-const password = process.argv[3];
-const steamName = process.argv[4];
+const accountName = credentials.accountName;
+const password = credentials.password;
+const steamName = credentials.steamName;
 
 signale.pending('Logging on with', accountName, 'accountName and', password, 'password');
 
