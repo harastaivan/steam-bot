@@ -32,14 +32,8 @@ client.on('friendRelationship', (steamid, relationship) => {
   if (relationship === 2) {
     client.addFriend(steamid);
     console.log('User with steamid', steamid, 'was added!');
-    setInterval(() => {
-      const randomNumber = Math.floor((Math.random() * 100) + 1);
-      const message = 'Hello there! Thanks for adding me! ' + randomNumber;
-      client.chatMessage(steamid, message);
-      console.log('Message sent to user with steamid', steamid);
-      console.log(message)
-    }, 60000)
-
+    const message = addRandomBadwords('Hey man, thanks for adding me :)');
+    sendChatMessage(steamid, message);
   }
 });
 
