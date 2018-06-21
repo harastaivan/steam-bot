@@ -8,6 +8,16 @@ signale.config({
   displayTimestamp: true,
 });
 
+const listOfTheRelationships = [
+  'None',
+  'Blocked',
+  'RequestRecipient (alias of PendingInvitee)',
+  'Friend',
+  'PendingInviter (alias of RequestInitiator)',
+  'Ignored',
+  'IgnoredFriend',
+  'SuggestedFriend',
+];
 
 const accountName = process.argv[2];
 const password = process.argv[3];
@@ -41,9 +51,20 @@ client.on('friendMessage', function(steamid, message) {
 });
 
 client.on('friendRelationship', (steamid, relationship) => {
+  signale.watch('friendRelationship', relationship, listOfTheRelationships[relationship], 'relationship');
+  if (relationship === 0) {
+    signale.success('User', steamid.getSteam3RenderedID(), 'removed you from friend list.');
+  }
+  if (relationship === 1) {
+    signale.success('User', steamid.getSteam3RenderedID(), 'has blocked you.');
+  }
   if (relationship === 2) {
+    signale.success('User', steamid.getSteam3RenderedID(), 'wants to add you to friend list.');
+    signale.pending('Adding user', steamid.getSteam3RenderedID());
     client.addFriend(steamid);
-    console.log('User with steamid', steamid, 'was added!');
+  }
+  if (relationship === 3) {
+    signale.success('You are now friend with user', steamid.getSteam3RenderedID());
     const message = addRandomBadwords('Hey man, thanks for adding me :)');
     sendChatMessage(steamid, message);
   }
