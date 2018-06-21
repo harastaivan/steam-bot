@@ -47,13 +47,11 @@ client.on('loggedOn', () => {
   signale.success('steamName set to', steamName);
 });
 
-client.on('friendMessage', function(steamid, message) {
+client.on('friendMessage', async (steamid, message) => {
   signale.watch('friendMessage');
   signale.success(steamid.getSteam3RenderedID(), 'sent you a message:', message)
-  setTimeout(() => {
-    const myMessage = message;
-    sendChatMessage(steamid, myMessage);
-  }, 3000);
+  const myMessage = await translate(message, {from: 'cs', to: 'de'});
+  sendChatMessage(steamid, myMessage);
 });
 
 client.on('friendRelationship', (steamid, relationship) => {
