@@ -29,7 +29,7 @@ const accountName = credentials.accountName;
 const password = credentials.password;
 const steamName = credentials.steamName;
 
-signale.pending('Logging on with', accountName, 'accountName and', password, 'password');
+signale.pending('Logging on to', accountName, 'account');
 
 const logOnOptions = {
   accountName: accountName,
