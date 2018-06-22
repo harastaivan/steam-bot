@@ -69,7 +69,7 @@ client.on('friendRelationship', (steamid, relationship) => {
   }
   if (relationship === 3) {
     signale.success('You are now friend with user', steamid.getSteam3RenderedID());
-    const message = addRandomBadwords('Hey man, thanks for adding me :)');
+    const message = 'Thanks for adding me :) Talk to me in czech please :)';
     sendChatMessage(steamid, message);
   }
 });
