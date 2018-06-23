@@ -4,7 +4,6 @@ const client = new SteamUser();
 const badwordsArray = require('badwords/array');
 const signale = require('signale');
 const translate = require('translate');
-
 const credentials = require('./credentials');
 
 signale.config({
@@ -43,17 +42,25 @@ client.on('loggedOn', () => {
   signale.success(client.steamID.getSteam3RenderedID());
 
   client.setPersona(SteamUser.Steam.EPersonaState.Online, steamName);
-  client.gamesPlayed(440);
-  signale.success('steamName set to', steamName);
+  client.gamesPlayed(credentials.ingame);
+  signale.success('Steam name set to:', steamName);
 });
 
 client.on('friendMessage', async (steamid, message) => {
   signale.watch('friendMessage');
-  signale.success(steamid.getSteam3RenderedID(), 'sent you a message:', message)
+  signale.success(steamid.getSteam3RenderedID(), ' sent you a message:', message)
   const myMessage = await translate(message, {from: 'cs', to: 'de'});
   sendChatMessage(steamid, myMessage);
 });
 
+
+
+/*
+
+  This handles all the releationship releated stuff. For example when adding another user or
+  if someone blocked you or removed you.
+
+*/
 client.on('friendRelationship', (steamid, relationship) => {
   signale.watch('friendRelationship', relationship, listOfTheRelationships[relationship], 'relationship');
   if (relationship === 0) {
@@ -69,7 +76,7 @@ client.on('friendRelationship', (steamid, relationship) => {
   }
   if (relationship === 3) {
     signale.success('You are now friend with user', steamid.getSteam3RenderedID());
-    const message = 'Thanks for adding me :) Talk to me in czech please :)';
+    const message = credentials.newfriendmessage; //Set inside the config file(credentials.js)
     sendChatMessage(steamid, message);
   }
 });
